@@ -451,6 +451,7 @@ extension DefaultChatCollectionDataSource: ContinuousLayoutEngineDelegate {
     }
 }
 
+@MainActor
 extension DefaultChatCollectionDataSource: RecyclerViewDataSource {
     public func numberOfCells() -> Int {
         return sections.first?.cells.count ?? 0
@@ -465,9 +466,9 @@ extension DefaultChatCollectionDataSource: RecyclerViewDataSource {
         payload.spacing.leading = 4
         payload.spacing.trailing = 4
         if case .date = sections.first?.cells[index] {
-            payload.isSticky = true
+            payload.isPinned = true
         } else {
-            payload.isSticky = false
+            payload.isPinned = false
         }
         return payload
     }
