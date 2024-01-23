@@ -574,7 +574,7 @@ extension MessageContainerView: RecyclerViewCellEvenHandler {
         }
     }
 
-    public func applyLayoutAttributes(_ attributes: LayoutAttributes, at state: RecyclerViewContainerState) {
-        delegate?.applyLayoutAttributes(attributes, at: state)
+    public func applyLayoutAttributes(_ attributes: LayoutAttributes, at state: RecyclerViewContainerState, index: Int) {
+        delegate?.applyLayoutAttributes(attributes, at: state, index: index)
     }
 }
