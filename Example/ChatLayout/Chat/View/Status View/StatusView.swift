@@ -57,7 +57,7 @@ final class StatusView: UIView, StaticViewFactory {
         guard status != self.status else {
             return
         }
-        
+
         switch status {
         case .sent:
             imageView.image = UIImage(named: "sent_status")
