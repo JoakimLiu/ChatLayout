@@ -676,8 +676,7 @@ extension ChatViewController: KeyboardListenerDelegate {
             // and not at the end of animation (I think similar thing happens within UICollectionView as well).
             // By keeping modification context until the endo animation allows all the animations to finish till the end of
             // our modification.
-            let modificationContext = scrollView.prepareForModifications()
-            let animationBlock = {
+            let animationBlock: (DataModificationContext) -> () = { _ in
                 self.scrollView.contentInset.bottom = newBottomInset
                 self.scrollView.verticalScrollIndicatorInsets.bottom = newBottomInset
                 self.scrollView.setNeedsLayout()
@@ -688,18 +687,11 @@ extension ChatViewController: KeyboardListenerDelegate {
                 }
             }
             let completionBlock: (Bool) -> Void = { _ in
-                modificationContext.commit()
                 self.currentInterfaceActions.options.remove(.changingContentInsets)
             }
-            if info.animationDuration > 0 {
-                UIView.animate(withDuration: info.animationDuration,
-                               animations: animationBlock,
-                               completion: completionBlock)
-
-            } else {
-                animationBlock()
-                completionBlock(true)
-            }
+            scrollView.performBatchUpdates(withDuration: info.animationDuration,
+                    animations: animationBlock,
+                    completion: completionBlock)
         }
     }
 
