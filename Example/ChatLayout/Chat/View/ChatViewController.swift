@@ -491,6 +491,20 @@ extension ChatViewController: ChatControllerDelegate {
                 return
             }
 
+            var elementUpdated = false
+            var elementUpdatedIndexPaths: [IndexPath] = []
+            if let changeset = changeSet.last {
+                elementUpdated = !changeset.elementUpdated.isEmpty && changeset.elementInserted.isEmpty && changeset.elementDeleted.isEmpty
+                if elementUpdated {
+                    elementUpdatedIndexPaths = changeset.elementUpdated.map {
+                        IndexPath(item: $0.element, section: $0.section)
+                    }
+                }
+            }
+            if elementUpdated {
+                chatLayout.keepContentOffsetAtBottomOnBatchUpdates = false
+            }
+
             if requiresIsolatedProcess {
                 chatLayout.processOnlyVisibleItemsOnAnimatedBatchUpdates = true
                 currentInterfaceActions.options.insert(.updatingCollectionInIsolation)
@@ -511,6 +525,7 @@ extension ChatViewController: ChatControllerDelegate {
                                   },
                                   completion: { _ in
                                       DispatchQueue.main.async {
+                                          self.chatLayout.keepContentOffsetAtBottomOnBatchUpdates = true
                                           self.chatLayout.processOnlyVisibleItemsOnAnimatedBatchUpdates = false
                                           if requiresIsolatedProcess {
                                               self.currentInterfaceActions.options.remove(.updatingCollectionInIsolation)

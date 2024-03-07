@@ -71,9 +71,9 @@ final class DefaultRandomDataProvider: RandomDataProvider {
         URL(string: "https://www.raywenderlich.com/7565482-visually-rich-links-tutorial-for-ios-image-thumbnails"),
         URL(string: "https://github.com/ekazaev/route-composer"),
         URL(string: "https://www.youtube.com/watch?v=-rAeqN-Q7x4"),
-        URL(string: "https://en.wikipedia.org/wiki/Dublin"),
-        URL(string: "https://en.wikipedia.org/wiki/Republic_of_Ireland"),
-        URL(string: "https://en.wikipedia.org/wiki/Cork_(city)"),
+//        URL(string: "https://en.wikipedia.org/wiki/Dublin"),
+//        URL(string: "https://en.wikipedia.org/wiki/Republic_of_Ireland"),
+//        URL(string: "https://en.wikipedia.org/wiki/Cork_(city)"),
         URL(string: "https://github.com/ekazaev/ChatLayout"),
         URL(string: "https://websummit.com")
     ].compactMap { $0 }
@@ -98,13 +98,13 @@ final class DefaultRandomDataProvider: RandomDataProvider {
     }
 
     func loadInitialMessages(completion: @escaping ([RawMessage]) -> Void) {
-        restartMessageTimer()
-        restartTypingTimer()
+//        restartMessageTimer()
+//        restartTypingTimer()
         dispatchQueue.async { [weak self] in
             guard let self else {
                 return
             }
-            let messages = createBunchOfMessages(number: 50)
+            let messages = createBunchOfMessages(number: 100)
             if messages.count > 10 {
                 lastReceivedUUID = messages[messages.count - 10].id
             }
